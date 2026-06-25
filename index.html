@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>С днём рождения, Катя!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Cormorant Garamond', serif;
+  background: linear-gradient(170deg, #fdf8f5 0%, #f7ede8 50%, #f0e0d8 100%);
+  min-height: 100vh;
+  color: #2a1a0e;
+  overflow-x: hidden;
+}
+
+canvas#confetti {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px 50px;
+  text-align: center;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 700px;
+}
+
+.label-top {
+  font-family: sans-serif;
+  font-size: clamp(10px, 2.5vw, 13px);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #b08070;
+  margin-bottom: 24px;
+}
+
+.photo-wrap {
+  width: clamp(200px, 50vw, 340px);
+  height: clamp(200px, 50vw, 340px);
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid rgba(210,170,160,0.4);
+  box-shadow: 0 10px 44px rgba(180,130,120,0.2);
+  margin-bottom: 36px;
+  flex-shrink: 0;
+}
+
+.photo-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+h1 {
+  font-size: clamp(64px, 18vw, 130px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1;
+  color: #2a1a0e;
+  margin-bottom: 10px;
+  letter-spacing: -0.01em;
+}
+
+.subtitle {
+  font-size: clamp(14px, 4vw, 26px);
+  font-weight: 300;
+  color: #9a6a58;
+  letter-spacing: 0.1em;
+  margin-bottom: 36px;
+}
+
+.divider {
+  width: 90px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #d4a090, transparent);
+  margin: 0 auto 36px;
+}
+
+.message {
+  width: 100%;
+  max-width: 580px;
+  font-size: clamp(17px, 4.5vw, 24px);
+  line-height: 1.85;
+  font-weight: 300;
+  color: #3d2410;
+  margin-bottom: 44px;
+  font-style: italic;
+}
+
+.message span {
+  font-style: normal;
+  color: #7a4a38;
+  font-weight: 400;
+}
+
+.music-player {
+  background: rgba(255,255,255,0.52);
+  border: 1px solid rgba(200,160,150,0.3);
+  border-radius: 18px;
+  padding: clamp(18px, 4vw, 28px) clamp(20px, 5vw, 36px);
+  width: 100%;
+  max-width: 460px;
+  backdrop-filter: blur(8px);
+  margin-bottom: 18px;
+}
+
+.music-label {
+  font-family: sans-serif;
+  font-size: clamp(10px, 2.5vw, 12px);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #a07060;
+  margin-bottom: 8px;
+}
+
+.music-piece {
+  font-size: clamp(15px, 4vw, 21px);
+  font-style: italic;
+  color: #2a1a0e;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+
+.progress-wrap {
+  height: 2px;
+  background: rgba(180,120,100,0.2);
+  border-radius: 2px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.progress-bar {
+  height: 100%;
+  background: #c4907a;
+  border-radius: 2px;
+  width: 0%;
+  transition: width 0.4s linear;
+}
+
+.time-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: sans-serif;
+  font-size: clamp(10px, 2.5vw, 12px);
+  color: #a07060;
+  letter-spacing: 0.04em;
+  margin-bottom: 16px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(16px, 4vw, 28px);
+}
+
+.play-btn {
+  width: clamp(48px, 12vw, 58px);
+  height: clamp(48px, 12vw, 58px);
+  border-radius: 50%;
+  border: 1.5px solid #c4907a;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  color: #9a6050;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.play-btn:hover { background: rgba(196,144,122,0.1); }
+.play-btn:active { transform: scale(0.95); }
+
+.vol-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #a07060;
+  font-size: clamp(16px, 4vw, 20px);
+  padding: 4px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.volume-slider {
+  -webkit-appearance: none;
+  width: clamp(60px, 15vw, 80px);
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(160,112,96,0.25);
+  outline: none;
+  cursor: pointer;
+}
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #c4907a;
+  cursor: pointer;
+}
+
+.footer-note {
+  font-size: clamp(13px, 3.5vw, 16px);
+  font-style: italic;
+  color: #b08878;
+  letter-spacing: 0.04em;
+  margin-top: 12px;
+}
+
+/* Убираем переносы на мобильном — текст адаптируется сам */
+@media (max-width: 500px) {
+  .message br { display: none; }
+  .hero { padding: 50px 20px 44px; }
+}
+</style>
+</head>
+<body>
+<canvas id="confetti"></canvas>
+<div class="hero">
+  <div class="content">
+    <div class="label-top">С днём рождения</div>
+
+    <div class="photo-wrap">
+      <img src="image/bouquet.jpg" alt="букет цветов">
+    </div>
+
+    <h1>Катя</h1>
+    <div class="subtitle">для тебя — немного Шопена</div>
+    <div class="divider"></div>
+
+    <div class="message">
+      Ты из тех людей, рядом с которыми просто <span>хорошо</span>.<br>
+      В театре, в случайном разговоре, в любой компании.<br><br>
+      Пусть этот год будет <span>добрым</span> к тебе —<br>
+      пусть дети радуют, Лёша балует,<br>
+      а жизнь подкидывает хорошие сюрпризы.<br><br>
+      И побольше спектаклей, которые потом<br>
+      долго не отпускают.
+    </div>
+
+    <div class="music-player">
+      <div class="music-label">Фредерик Шопен</div>
+      <div class="music-piece" id="musicPiece">Ноктюрн op. 9 № 2 ми-бемоль мажор</div>
+      <div class="progress-wrap" id="progWrap">
+        <div class="progress-bar" id="progBar"></div>
+      </div>
+      <div class="time-row">
+        <span id="curTime">0:00</span>
+        <span id="durTime">—:——</span>
+      </div>
+      <div class="controls">
+        <button class="vol-btn" id="volBtn">&#128266;</button>
+        <input type="range" class="volume-slider" id="volSlider" min="0" max="1" step="0.01" value="0.8">
+        <button class="play-btn" id="playBtn" aria-label="Воспроизвести">
+          <svg id="playIcon" width="26" height="26" viewBox="0 0 24 24" fill="#9a6050">
+            <polygon points="5,3 19,12 5,21"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="footer-note">Нажми — и пусть музыка наполнит этот день</div>
+  </div>
+</div>
+
+<script>
+const pieces = [
+  { title: "Ноктюрн op. 9 № 2 ми-бемоль мажор", url: "music/nocturne.mp3" },
+  { title: "Вальс op. 64 № 2 до-диез минор",     url: "music/waltz.mp3" }
+];
+let audio = null, playing = false, currentPiece = 0, progInterval = null;
+const playBtn    = document.getElementById('playBtn');
+const playIcon   = document.getElementById('playIcon');
+const progBar    = document.getElementById('progBar');
+const progWrap   = document.getElementById('progWrap');
+const curTime    = document.getElementById('curTime');
+const durTime    = document.getElementById('durTime');
+const volSlider  = document.getElementById('volSlider');
+const volBtn     = document.getElementById('volBtn');
+const musicPiece = document.getElementById('musicPiece');
+
+function fmt(s) {
+  if (!isFinite(s)) return '0:00';
+  return Math.floor(s/60) + ':' + String(Math.floor(s%60)).padStart(2,'0');
+}
+function initAudio() {
+  if (audio) { audio.pause(); audio = null; }
+  audio = new Audio(pieces[currentPiece].url);
+  audio.volume = parseFloat(volSlider.value);
+  musicPiece.textContent = pieces[currentPiece].title;
+  audio.addEventListener('loadedmetadata', () => { durTime.textContent = fmt(audio.duration); });
+  audio.addEventListener('ended', () => {
+    currentPiece = (currentPiece + 1) % pieces.length;
+    initAudio();
+    audio.play().then(() => { playing = true; updateIcon(); });
+  });
+}
+function updateIcon() {
+  playIcon.innerHTML = playing
+    ? '<rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>'
+    : '<polygon points="5,3 19,12 5,21"/>';
+}
+function startProgress() {
+  clearInterval(progInterval);
+  progInterval = setInterval(() => {
+    if (audio && audio.duration) {
+      progBar.style.width = (audio.currentTime / audio.duration * 100) + '%';
+      curTime.textContent = fmt(audio.currentTime);
+    }
+  }, 500);
+}
+playBtn.addEventListener('click', () => {
+  if (!audio) initAudio();
+  if (playing) { audio.pause(); playing = false; clearInterval(progInterval); }
+  else { audio.play().catch(()=>{}); playing = true; startProgress(); }
+  updateIcon();
+});
+volSlider.addEventListener('input', () => { if (audio) audio.volume = parseFloat(volSlider.value); });
+volBtn.addEventListener('click', () => {
+  if (!audio) return;
+  if (audio.volume > 0) { audio.volume = 0; volSlider.value = 0; }
+  else { audio.volume = 0.8; volSlider.value = 0.8; }
+});
+progWrap.addEventListener('click', (e) => {
+  if (!audio || !audio.duration) return;
+  const r = progWrap.getBoundingClientRect();
+  audio.currentTime = ((e.clientX - r.left) / r.width) * audio.duration;
+});
+
+// Touch scrubbing на мобильном
+progWrap.addEventListener('touchstart', (e) => {
+  if (!audio || !audio.duration) return;
+  const r = progWrap.getBoundingClientRect();
+  audio.currentTime = ((e.touches[0].clientX - r.left) / r.width) * audio.duration;
+}, { passive: true });
+
+// Confetti
+const canvas = document.getElementById('confetti');
+const ctx = canvas.getContext('2d');
+const colors = ['#f2c4ce','#e8a8b8','#f5dde5','#dfc0c8','#f7e8ec','#e0b8c8','#f9d4dc','#c8a0b0','#fae0e8','#d4b0c0'];
+let particles = [];
+
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+
+function makeParticle() {
+  return {
+    x: Math.random() * canvas.width, y: -10,
+    r: 3 + Math.random() * 5,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    speed: 0.5 + Math.random() * 1.2,
+    drift: (Math.random() - 0.5) * 0.8,
+    angle: Math.random() * Math.PI * 2,
+    spin: (Math.random() - 0.5) * 0.06,
+    opacity: 0.5 + Math.random() * 0.35,
+    shape: Math.random() > 0.5 ? 'circle' : 'rect',
+    w: 5 + Math.random() * 6,
+    h: 3 + Math.random() * 4,
+  };
+}
+
+function drawParticle(p) {
+  ctx.save();
+  ctx.globalAlpha = p.opacity;
+  ctx.fillStyle = p.color;
+  ctx.translate(p.x, p.y);
+  ctx.rotate(p.angle);
+  if (p.shape === 'circle') { ctx.beginPath(); ctx.arc(0,0,p.r,0,Math.PI*2); ctx.fill(); }
+  else { ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h); }
+  ctx.restore();
+}
+
+function animate() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  const maxP = window.innerWidth < 500 ? 50 : 90;
+  if (particles.length < maxP && Math.random() < 0.4) particles.push(makeParticle());
+  particles = particles.filter(p => p.y < canvas.height + 20);
+  particles.forEach(p => { p.y += p.speed; p.x += p.drift; p.angle += p.spin; drawParticle(p); });
+  requestAnimationFrame(animate);
+}
+
+resize();
+window.addEventListener('resize', resize);
+animate();
+</script>
+</body>
+</html>
