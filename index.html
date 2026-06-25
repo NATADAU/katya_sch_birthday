@@ -12,7 +12,7 @@ body { font-family: 'Cormorant Garamond', serif; color: #fff; overflow-x: hidden
 .bg { position: fixed; inset: 0; background: url('image.jpg') center center / cover no-repeat; z-index: 0; }
 .bg-overlay { position: fixed; inset: 0; background: linear-gradient(to bottom, rgba(10,0,0,0.35) 0%, rgba(10,0,0,0.60) 40%, rgba(5,0,0,0.78) 100%); z-index: 1; }
 canvas#confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
-canvas#fireworks { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 6; }
+
 .hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 24px 50px; text-align: center; }
 .content { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 700px; }
 .label-top { font-family: sans-serif; font-size: clamp(10px,2.5vw,13px); letter-spacing: 0.35em; text-transform: uppercase; color: rgba(255,235,225,0.85); margin-bottom: 16px; }
@@ -36,19 +36,17 @@ h1 { font-size: clamp(72px,18vw,140px); font-weight: 300; font-style: italic; li
 .volume-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: rgba(255,190,160,0.9); cursor: pointer; }
 .footer-note { font-size: clamp(13px,3.5vw,16px); font-style: italic; color: rgba(255,220,200,0.7); letter-spacing: 0.04em; margin-top: 12px; }
 
-.box-wrap { position: relative; z-index: 5; display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: pointer; -webkit-tap-highlight-color: transparent; user-select: none; margin-bottom: 20px; }
-.box-label { font-family: 'Cormorant Garamond', serif; font-size: clamp(13px,3vw,16px); font-style: italic; color: rgba(255,220,200,0.75); letter-spacing: 0.06em; pointer-events: none; }
-.box-lid-g { transform-origin: 45px 43px; transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1); }
-.box-wrap.opened .box-lid-g { transform: rotate(-50deg) translateY(-2px); }
 
-@media (max-width: 500px) { .message br { display: none; } .hero { padding: 50px 20px 44px; } }
+
+
+ .hero { padding: 50px 20px 44px; } }
 </style>
 </head>
 <body>
 <div class="bg"></div>
 <div class="bg-overlay"></div>
 <canvas id="confetti"></canvas>
-<canvas id="fireworks"></canvas>
+
 
 <div class="hero">
   <div class="content">
@@ -80,37 +78,11 @@ h1 { font-size: clamp(72px,18vw,140px); font-weight: 300; font-style: italic; li
       </div>
     </div>
 
-    <div class="box-wrap" id="boxWrap">
-      <svg width="90" height="90" viewBox="0 0 90 90" fill="none">
-        <defs>
-          <linearGradient id="bg3" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#e8607a"/><stop offset="100%" stop-color="#c0405c"/>
-          </linearGradient>
-          <linearGradient id="lg3" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#f2849a"/><stop offset="100%" stop-color="#e06080"/>
-          </linearGradient>
-        </defs>
-        <rect x="12" y="46" width="66" height="38" rx="4" fill="url(#bg3)"/>
-        <rect x="40" y="46" width="10" height="38" fill="rgba(255,200,210,0.3)"/>
-        <rect x="12" y="58" width="66" height="7" fill="rgba(255,200,210,0.25)"/>
-        <rect x="16" y="50" width="20" height="5" rx="2" fill="rgba(255,255,255,0.13)"/>
-        <g class="box-lid-g">
-          <rect x="8" y="36" width="74" height="13" rx="4" fill="url(#lg3)"/>
-          <ellipse cx="33" cy="34" rx="13" ry="8" fill="#f9a8b8" transform="rotate(-18 33 34)"/>
-          <ellipse cx="57" cy="34" rx="13" ry="8" fill="#f9a8b8" transform="rotate(18 57 34)"/>
-          <circle cx="45" cy="33" r="6" fill="#ffc8d4"/>
-          <ellipse cx="38" cy="30" rx="4" ry="2.5" fill="rgba(255,255,255,0.3)" transform="rotate(-15 38 30)"/>
-        </g>
-      </svg>
-      <div class="box-label">нажми — салют!</div>
-    </div>
-
     <div class="footer-note">Нажми — и пусть музыка наполнит этот день</div>
   </div>
 </div>
 
 <script>
-// Музыка
 const pieces = [{ title: "Ноктюрн op. 9 № 2 ми-бемоль мажор", url: "music.mp3" }];
 let audio = null, playing = false, progInterval = null;
 const playBtn = document.getElementById('playBtn');
@@ -127,26 +99,25 @@ function initAudio() {
   audio = new Audio(pieces[0].url);
   audio.volume = parseFloat(volSlider.value);
   audio.addEventListener('loadedmetadata', () => { durTime.textContent = fmt(audio.duration); });
-  audio.addEventListener('ended', () => { playing = false; updateIcon(); clearInterval(progInterval); });
+  audio.addEventListener('ended', () => { playing=false; updateIcon(); clearInterval(progInterval); });
 }
 function updateIcon() {
   playIcon.innerHTML = playing ? '<rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>' : '<polygon points="5,3 19,12 5,21"/>';
 }
 function startProgress() {
   clearInterval(progInterval);
-  progInterval = setInterval(() => { if (audio&&audio.duration) { progBar.style.width=(audio.currentTime/audio.duration*100)+'%'; curTime.textContent=fmt(audio.currentTime); } }, 500);
+  progInterval = setInterval(() => { if(audio&&audio.duration){progBar.style.width=(audio.currentTime/audio.duration*100)+'%';curTime.textContent=fmt(audio.currentTime);} }, 500);
 }
 playBtn.addEventListener('click', () => {
   if (!audio) initAudio();
   if (playing) { audio.pause(); playing=false; clearInterval(progInterval); } else { audio.play().catch(()=>{}); playing=true; startProgress(); }
   updateIcon();
 });
-volSlider.addEventListener('input', () => { if (audio) audio.volume=parseFloat(volSlider.value); });
-volBtn.addEventListener('click', () => { if (!audio) return; if (audio.volume>0){audio.volume=0;volSlider.value=0;}else{audio.volume=0.8;volSlider.value=0.8;} });
-progWrap.addEventListener('click', (e) => { if (!audio||!audio.duration) return; const r=progWrap.getBoundingClientRect(); audio.currentTime=((e.clientX-r.left)/r.width)*audio.duration; });
-progWrap.addEventListener('touchstart', (e) => { if (!audio||!audio.duration) return; const r=progWrap.getBoundingClientRect(); audio.currentTime=((e.touches[0].clientX-r.left)/r.width)*audio.duration; }, {passive:true});
+volSlider.addEventListener('input', () => { if(audio) audio.volume=parseFloat(volSlider.value); });
+volBtn.addEventListener('click', () => { if(!audio) return; if(audio.volume>0){audio.volume=0;volSlider.value=0;}else{audio.volume=0.8;volSlider.value=0.8;} });
+progWrap.addEventListener('click', (e) => { if(!audio||!audio.duration) return; const r=progWrap.getBoundingClientRect(); audio.currentTime=((e.clientX-r.left)/r.width)*audio.duration; });
+progWrap.addEventListener('touchstart', (e) => { if(!audio||!audio.duration) return; const r=progWrap.getBoundingClientRect(); audio.currentTime=((e.touches[0].clientX-r.left)/r.width)*audio.duration; }, {passive:true});
 
-// Конфетти
 const confCanvas = document.getElementById('confetti');
 const confCtx = confCanvas.getContext('2d');
 const confColors = ['#f2c4ce','#e8a8b8','#f5dde5','#dfc0c8','#f7e8ec','#e0b8c8','#f9d4dc','#c8a0b0'];
@@ -156,91 +127,6 @@ function makeConf() { return { x:Math.random()*confCanvas.width, y:-10, r:3+Math
 function drawConf(p) { confCtx.save(); confCtx.globalAlpha=p.opacity; confCtx.fillStyle=p.color; confCtx.translate(p.x,p.y); confCtx.rotate(p.angle); if(p.shape==='circle'){confCtx.beginPath();confCtx.arc(0,0,p.r,0,Math.PI*2);confCtx.fill();}else confCtx.fillRect(-p.w/2,-p.h/2,p.w,p.h); confCtx.restore(); }
 function animateConf() { confCtx.clearRect(0,0,confCanvas.width,confCanvas.height); const max=window.innerWidth<500?50:90; if(confParticles.length<max&&Math.random()<0.4) confParticles.push(makeConf()); confParticles=confParticles.filter(p=>p.y<confCanvas.height+20); confParticles.forEach(p=>{p.y+=p.speed;p.x+=p.drift;p.angle+=p.spin;drawConf(p);}); requestAnimationFrame(animateConf); }
 resizeConf(); window.addEventListener('resize', resizeConf); animateConf();
-
-// Салют
-const fwCanvas = document.getElementById('fireworks');
-const fwCtx = fwCanvas.getContext('2d');
-function resizeFw() { fwCanvas.width=window.innerWidth; fwCanvas.height=window.innerHeight; }
-resizeFw(); window.addEventListener('resize', resizeFw);
-
-let fwParticles = [], fwRockets = [], fwAnimId = null;
-const PALETTES = [
-  ['#ff6b6b','#ff8e8e','#ffb3b3','#ffffff'],
-  ['#ffd93d','#ffe66d','#fff0a0','#ffffff'],
-  ['#6bcbff','#9ddeff','#c5eeff','#ffffff'],
-  ['#c084fc','#d8b4fe','#ede9fe','#ffffff'],
-  ['#4ade80','#86efac','#bbf7d0','#ffffff'],
-  ['#fb923c','#fdba74','#fed7aa','#ffffff'],
-  ['#f472b6','#f9a8d4','#fce7f3','#ffffff'],
-];
-
-function makeRocket(ox, oy) {
-  const tx = 80 + Math.random()*(fwCanvas.width-160);
-  const ty = 60 + Math.random()*(fwCanvas.height*0.45);
-  return { x:ox, y:oy, tx, ty, speed:12+Math.random()*6, trail:[], palette:PALETTES[Math.floor(Math.random()*PALETTES.length)], done:false };
-}
-
-function fwExplode(x, y, palette) {
-  const count = 90 + Math.floor(Math.random()*40);
-  for (let i=0; i<count; i++) {
-    const angle = (Math.PI*2*i/count) + (Math.random()-0.5)*0.2;
-    const speed = 1.5 + Math.random()*4.5;
-    const isSpark = Math.random()<0.3;
-    fwParticles.push({ x, y, vx:Math.cos(angle)*speed, vy:Math.sin(angle)*speed, life:1.0, decay:0.012+Math.random()*0.018, color:palette[Math.floor(Math.random()*palette.length)], r:isSpark?1.5:2.5+Math.random()*2, gravity:0.055+Math.random()*0.03, isSpark });
-  }
-  for (let i=0; i<20; i++) {
-    const angle = Math.random()*Math.PI*2;
-    const speed = 5+Math.random()*5;
-    fwParticles.push({ x, y, vx:Math.cos(angle)*speed, vy:Math.sin(angle)*speed, life:1.0, decay:0.02+Math.random()*0.015, color:'#ffffff', r:1.2, gravity:0.04, isSpark:true });
-  }
-}
-
-function fwTick() {
-  fwCtx.clearRect(0,0,fwCanvas.width,fwCanvas.height);
-  
-
-  fwRockets = fwRockets.filter(r=>!r.done);
-  fwRockets.forEach(r => {
-    const dx=r.tx-r.x, dy=r.ty-r.y, dist=Math.sqrt(dx*dx+dy*dy);
-    if (dist < r.speed+2) { fwExplode(r.tx,r.ty,r.palette); r.done=true; return; }
-    const step=r.speed/dist; r.x+=dx*step; r.y+=dy*step;
-    r.trail.push({x:r.x,y:r.y}); if(r.trail.length>12) r.trail.shift();
-    if (r.trail.length>1) { fwCtx.save(); for(let i=1;i<r.trail.length;i++){ const t=i/r.trail.length; fwCtx.globalAlpha=t*0.5; fwCtx.strokeStyle=r.palette[0]; fwCtx.lineWidth=t*2; fwCtx.beginPath(); fwCtx.moveTo(r.trail[i-1].x,r.trail[i-1].y); fwCtx.lineTo(r.trail[i].x,r.trail[i].y); fwCtx.stroke(); } fwCtx.restore(); }
-    fwCtx.save(); fwCtx.globalAlpha=0.9; fwCtx.fillStyle='#fff'; fwCtx.beginPath(); fwCtx.arc(r.x,r.y,2.5,0,Math.PI*2); fwCtx.fill(); fwCtx.restore();
-  });
-
-  fwParticles = fwParticles.filter(p=>p.life>0.01);
-  fwParticles.forEach(p => {
-    p.x+=p.vx; p.y+=p.vy; p.vy+=p.gravity; p.vx*=0.97; p.life-=p.decay;
-    fwCtx.save(); fwCtx.globalAlpha=Math.max(0,p.life)*0.88; fwCtx.fillStyle=p.color;
-    if (p.isSpark) {
-      const s=p.r*p.life; fwCtx.beginPath(); fwCtx.arc(p.x,p.y,s,0,Math.PI*2); fwCtx.fill();
-      fwCtx.globalAlpha*=0.4; fwCtx.fillRect(p.x-s*2.5,p.y-0.5,s*5,1); fwCtx.fillRect(p.x-0.5,p.y-s*2.5,1,s*5);
-    } else { fwCtx.beginPath(); fwCtx.arc(p.x,p.y,p.r*p.life,0,Math.PI*2); fwCtx.fill(); }
-    fwCtx.restore();
-  });
-
-  if (fwParticles.length>0||fwRockets.length>0) { fwAnimId=requestAnimationFrame(fwTick); }
-  else { fwAnimId=null; fwCtx.clearRect(0,0,fwCanvas.width,fwCanvas.height); }
-}
-
-const boxWrap = document.getElementById('boxWrap');
-boxWrap.addEventListener('click', () => {
-  boxWrap.classList.add('opened');
-  setTimeout(() => boxWrap.classList.remove('opened'), 1400);
-
-  const svgRect = boxWrap.querySelector('svg').getBoundingClientRect();
-  const ox = svgRect.left + svgRect.width/2;
-  const oy = svgRect.top + svgRect.height*0.3;
-
-  const count = 5+Math.floor(Math.random()*3);
-  for (let i=0; i<count; i++) {
-    setTimeout(() => {
-      fwRockets.push(makeRocket(ox, oy));
-      if (!fwAnimId) fwAnimId=requestAnimationFrame(fwTick);
-    }, i*180);
-  }
-});
 </script>
 </body>
 </html>
