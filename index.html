@@ -9,45 +9,160 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;1,500;1,600&display=swap" rel="stylesheet">
 <style>
-:root{--paper:#f4efe7;--paper-2:#ebe3d8;--ink:#282522;--muted:#6e6862;--accent:#7e4653;--accent-soft:#d9bec4;--line:rgba(40,37,34,.16);--white:#fffdf9}
+:root{
+--paper:#f4efe7;
+--paper-2:#ebe3d8;
+--ink:#282522;
+--muted:#6e6862;
+--accent:#7e4653;
+--accent-soft:#d9bec4;
+--line:rgba(40,37,34,.16);
+--white:#fffdf9;
+}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;color:var(--ink);background:#160707;font-family:'Manrope',sans-serif;overflow-x:hidden}
+body{
+margin:0;
+color:var(--ink);
+background:#160707;
+font-family:'Manrope',sans-serif;
+overflow-x:hidden;
+}
 .bg{position:fixed;inset:0;background:url('image.jpg') center center/cover no-repeat;z-index:0}
 .bg-overlay{position:fixed;inset:0;background:linear-gradient(to bottom,rgba(10,0,0,.35) 0%,rgba(10,0,0,.60) 40%,rgba(5,0,0,.78) 100%);z-index:1}
 #confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
 main{position:relative;z-index:3}
 .wrap{width:min(1120px,calc(100% - 36px));margin:0 auto}
-.hero{min-height:100svh;display:flex;align-items:center;padding:38px 0 30px}
-.hero-copy{padding:12px 0;max-width:760px;color:#fff8f3}
-.eyebrow{display:flex;align-items:center;gap:12px;color:rgba(255,210,190,.92);font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;margin-bottom:22px}
+.hero{
+min-height:100svh;
+display:flex;
+align-items:center;
+padding:38px 0 30px;
+}
+.hero-copy{padding:12px 0;max-width:760px}
+.eyebrow{
+display:flex;
+align-items:center;
+gap:12px;
+color:var(--accent);
+font-size:12px;
+font-weight:600;
+letter-spacing:.18em;
+text-transform:uppercase;
+margin-bottom:22px;
+}
 .eyebrow::before{content:"";width:38px;height:1px;background:currentColor}
-h1{margin:0;max-width:760px;font-family:'Playfair Display',serif;font-size:clamp(72px,10.4vw,142px);line-height:.84;font-weight:500;letter-spacing:-.045em;color:#fff}
-h1 em{display:block;font-weight:500;color:#f1bac7;margin-left:.38em}
-.lead{max-width:620px;margin:26px 0 0;font-family:'Playfair Display',serif;font-size:clamp(24px,2.7vw,38px);line-height:1.18;font-style:italic;color:rgba(255,245,238,.98)}
-.lead small{display:block;margin-top:14px;font-family:'Manrope',sans-serif;font-size:clamp(15px,1.45vw,17px);line-height:1.58;font-style:normal;color:rgba(255,230,218,.78);max-width:500px}
+h1{
+margin:0;
+max-width:760px;
+font-family:'Playfair Display',serif;
+font-size:clamp(72px,10.4vw,142px);
+line-height:.84;
+font-weight:500;
+letter-spacing:-.045em;
+}
+h1 em{display:block;font-weight:500;color:var(--accent);margin-left:.38em}
+.lead{
+max-width:620px;
+margin:26px 0 0;
+font-family:'Playfair Display',serif;
+font-size:clamp(24px,2.7vw,38px);
+line-height:1.18;
+font-style:italic;
+}
+.lead small{
+display:block;
+margin-top:14px;
+font-family:'Manrope',sans-serif;
+font-size:clamp(15px,1.45vw,17px);
+line-height:1.58;
+font-style:normal;
+color:var(--muted);
+max-width:500px;
+}
 .section{padding:clamp(48px,7vw,90px) 0}
-.section-line{border-top:1px solid rgba(255,235,225,.18)}
+.section-line{border-top:1px solid var(--line)}
 .section-grid{display:grid;grid-template-columns:.74fr 1.26fr;gap:clamp(24px,4vw,58px);align-items:start}
-.kicker{position:sticky;top:20px;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#f0b5c2}
-.prose{max-width:780px;font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,52px);line-height:1.16;letter-spacing:-.025em;color:#fff8f3;text-shadow:0 1px 16px rgba(0,0,0,.18)}
+.kicker{position:sticky;top:20px;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.prose{max-width:780px;font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,52px);line-height:1.16;letter-spacing:-.025em}
 .prose p{margin:0 0 .56em}
-.prose .quiet{font-family:'Manrope',sans-serif;font-size:clamp(16px,1.8vw,20px);line-height:1.6;color:rgba(255,235,225,.80);letter-spacing:0;max-width:680px}
-.wish-panel{position:relative;border-radius:30px;background:var(--accent);color:#fff8f6;padding:clamp(28px,5vw,58px);overflow:hidden}
-.wish-panel::after{content:"";position:absolute;width:220px;height:220px;border:1px solid rgba(255,255,255,.16);border-radius:50%;right:-70px;top:-74px}
+.prose .quiet{font-family:'Manrope',sans-serif;font-size:clamp(16px,1.8vw,20px);line-height:1.6;color:var(--muted);letter-spacing:0;max-width:680px}
+.wish-panel{
+position:relative;
+border-radius:30px;
+background:var(--accent);
+color:#fff8f6;
+padding:clamp(28px,5vw,58px);
+overflow:hidden;
+}
+.wish-panel::after{
+content:"";
+position:absolute;
+width:220px;height:220px;border:1px solid rgba(255,255,255,.16);border-radius:50%;right:-70px;top:-74px;
+}
 .wish-panel blockquote{margin:0;max-width:900px;font-family:'Playfair Display',serif;font-size:clamp(30px,4.7vw,60px);line-height:1.08;font-style:italic;letter-spacing:-.03em}
 .wish-panel p{margin:22px 0 0;max-width:740px;font-size:clamp(16px,1.8vw,20px);line-height:1.62;color:rgba(255,248,246,.82)}
-.personal-card{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(22px,4vw,44px);align-items:end;padding:clamp(24px,4vw,42px);border:1px solid var(--line);border-radius:30px;background:rgba(255,253,249,.88);backdrop-filter:blur(6px)}
+.personal-card{
+display:grid;
+grid-template-columns:1.15fr .85fr;
+gap:clamp(22px,4vw,44px);
+align-items:end;
+padding:clamp(24px,4vw,42px);
+border:1px solid var(--line);
+border-radius:30px;
+background:rgba(255,253,249,.68);
+backdrop-filter:blur(6px);
+}
 .personal-card h2{margin:0;font-family:'Playfair Display',serif;font-size:clamp(34px,4.2vw,56px);line-height:1.04;font-weight:500;letter-spacing:-.03em}
 .personal-card p{margin:16px 0 0;font-size:clamp(16px,1.8vw,20px);line-height:1.6;color:var(--muted)}
-.aside-note{font-family:'Playfair Display',serif;font-size:clamp(22px,2.6vw,34px);line-height:1.22;font-style:italic;color:var(--accent);transform:rotate(-1.5deg)}
+.aside-note{
+font-family:'Playfair Display',serif;
+font-size:clamp(22px,2.6vw,34px);
+line-height:1.22;
+font-style:italic;
+color:var(--accent);
+transform:rotate(-1.5deg);
+}
 .final{text-align:center;padding:clamp(56px,8vw,96px) 0 40px}
-.final .mini{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#efbac5;font-weight:600}
-.final h2{margin:14px auto 18px;max-width:900px;font-family:'Playfair Display',serif;font-size:clamp(42px,6vw,84px);line-height:.96;font-weight:500;letter-spacing:-.04em;color:#fff8f3;text-shadow:0 1px 18px rgba(0,0,0,.2)}
-.final p{margin:0 auto;color:rgba(255,235,225,.78);font-size:clamp(15px,1.6vw,19px);line-height:1.64;max-width:620px}
-.music-fab{position:fixed;right:18px;bottom:18px;z-index:6;display:flex;align-items:center;gap:10px;border:1px solid rgba(40,37,34,.15);background:rgba(255,253,249,.88);backdrop-filter:blur(14px);box-shadow:0 10px 30px rgba(54,44,38,.12);color:var(--ink);border-radius:999px;padding:9px 14px 9px 9px;font:600 12px/1 'Manrope',sans-serif;letter-spacing:.03em;cursor:pointer}
+.final .mini{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.final h2{margin:14px auto 18px;max-width:900px;font-family:'Playfair Display',serif;font-size:clamp(42px,6vw,84px);line-height:.96;font-weight:500;letter-spacing:-.04em}
+.final p{margin:0 auto;color:var(--muted);font-size:clamp(15px,1.6vw,19px);line-height:1.64;max-width:620px}
+.music-fab{
+position:fixed;
+right:18px;
+bottom:18px;
+z-index:5;
+display:flex;
+align-items:center;
+gap:10px;
+border:1px solid rgba(40,37,34,.15);
+background:rgba(255,253,249,.88);
+backdrop-filter:blur(14px);
+box-shadow:0 10px 30px rgba(54,44,38,.12);
+color:var(--ink);
+border-radius:999px;
+padding:9px 14px 9px 9px;
+font:600 12px/1 'Manrope',sans-serif;
+letter-spacing:.03em;
+cursor:pointer;
+}
 .music-icon{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#fff}
 .music-fab:focus-visible{outline:3px solid rgba(126,70,83,.24);outline-offset:3px}
+.hero-copy{color:#fff8f3}
+.eyebrow{color:rgba(255,210,190,.92)}
+h1{color:#fff}
+h1 em{color:#f1bac7}
+.lead{color:rgba(255,245,238,.98)}
+.lead small{color:rgba(255,230,218,.78)}
+.section-line{border-top-color:rgba(255,235,225,.18)}
+.kicker{color:#f0b5c2}
+.prose{color:#fff8f3;text-shadow:0 1px 16px rgba(0,0,0,.18)}
+.prose .quiet{color:rgba(255,235,225,.80)}
+.final .mini{color:#efbac5}
+.final h2{color:#fff8f3;text-shadow:0 1px 18px rgba(0,0,0,.2)}
+.final p{color:rgba(255,235,225,.78)}
+.personal-card{background:rgba(255,253,249,.88)}
+.music-fab{z-index:6}
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .75s ease,transform .75s ease}
 .reveal.visible{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}}
@@ -98,30 +213,104 @@ h1{font-size:clamp(58px,19vw,84px)}
 <div class="hero-copy reveal">
 <div class="eyebrow">С днём рождения</div>
 <h1>Катя,<em>для Вас.</em></h1>
-<div class="lead">Пусть этот год будет хорошим.<br>Не идеальным — это было бы подозрительно.<small>А просто спокойным, интересным, добрым — и с заметно большим количеством приятных вещей, чем поводов о них беспокоиться.</small></div>
+<div class="lead">
+Пусть этот год будет хорошим.<br>Не идеальным — это было бы подозрительно.
+<small>А просто спокойным, интересным, добрым — и с заметно большим количеством приятных вещей, чем поводов о них беспокоиться.</small>
+</div>
 </div>
 </section>
 </div>
-<section class="section section-line"><div class="wrap section-grid"><div class="kicker reveal">Пожелание на год</div><div class="prose reveal"><p>Пусть рядом будут люди, с которыми легко.</p><p>Пусть работа радует не только результатом, но и самим процессом.</p><p class="quiet">Пусть будут хорошие новости, приятные поездки, встречи, разговоры и вечера, которые не хочется торопить. И пусть всё важное складывается чуть проще, чем обычно.</p></div></div></section>
-<section class="section"><div class="wrap"><div class="wish-panel reveal"><blockquote>И пусть многое в этом году оказывается легче, чем Вы заранее представляли.</blockquote><p>Без обязательной борьбы за каждый хороший день. Без необходимости всё удерживать на себе. Иногда пусть обстоятельства сами ведут себя прилично.</p></div></div></section>
-<section class="section section-line"><div class="wrap"><div class="personal-card reveal"><div><h2>И ещё одно — совсем личное.</h2><p>Пусть сын радует, взрослеет и постепенно осваивает один особенно ценный навык — самостоятельное написание курсовых.</p><p>Я, со своей стороны, продолжаю регулярно напоминать ему, что именно так всё и должно происходить.</p></div><div class="aside-note">Насколько успешно — покажет следующий учебный год.</div></div></div></section>
-<section class="final"><div class="wrap reveal"><div class="mini">С днём рождения, Катя</div><h2>Пусть впереди будет много хорошего.</h2><p>И пусть хорошее не требует долгих доказательств, сложных объяснений и предварительного согласования со всеми возможными обстоятельствами.</p></div></section>
+<section class="section section-line">
+<div class="wrap section-grid">
+<div class="kicker reveal">Пожелание на год</div>
+<div class="prose reveal">
+<p>Пусть рядом будут люди, с которыми легко.</p>
+<p>Пусть работа радует не только результатом, но и самим процессом.</p>
+<p class="quiet">Пусть будут хорошие новости, приятные поездки, встречи, разговоры и вечера, которые не хочется торопить. И пусть всё важное складывается чуть проще, чем обычно.</p>
+</div>
+</div>
+</section>
+<section class="section">
+<div class="wrap">
+<div class="wish-panel reveal">
+<blockquote>И пусть многое в этом году оказывается легче, чем Вы заранее представляли.</blockquote>
+<p>Без обязательной борьбы за каждый хороший день. Без необходимости всё удерживать на себе. Иногда пусть обстоятельства сами ведут себя прилично.</p>
+</div>
+</div>
+</section>
+<section class="section section-line">
+<div class="wrap">
+<div class="personal-card reveal">
+<div>
+<h2>И ещё одно — совсем личное.</h2>
+<p>Пусть сын радует, взрослеет и постепенно осваивает один особенно ценный навык — самостоятельное написание курсовых.</p>
+</div>
+<div class="aside-note">Насколько успешно — покажет следующий учебный год.</div>
+</div>
+</div>
+</section>
+<section class="final">
+<div class="wrap reveal">
+<div class="mini">С днём рождения, Катя</div>
+<h2>Пусть впереди будет много хорошего.</h2>
+<p>И пусть хорошее не требует долгих доказательств, сложных объяснений и предварительного согласования со всеми возможными обстоятельствами.</p>
+</div>
+</section>
 </main>
-<button class="music-fab" id="musicButton" type="button" aria-label="Включить музыку"><span class="music-icon" id="musicIcon">▶</span><span class="label" id="musicLabel">Включить музыку</span></button>
+<button class="music-fab" id="musicButton" type="button" aria-label="Включить музыку">
+<span class="music-icon" id="musicIcon">▶</span>
+<span class="label" id="musicLabel">Включить музыку</span>
+</button>
 <audio id="audio" src="music.mp3" preload="metadata"></audio>
 <script>
-const audio=document.getElementById('audio'),button=document.getElementById('musicButton'),icon=document.getElementById('musicIcon'),label=document.getElementById('musicLabel');let playing=false;
-button.addEventListener('click',async()=>{try{if(playing){audio.pause();playing=false;icon.textContent='▶';label.textContent='Включить музыку';button.setAttribute('aria-label','Включить музыку')}else{await audio.play();playing=true;icon.textContent='Ⅱ';label.textContent='Пауза';button.setAttribute('aria-label','Поставить музыку на паузу')}}catch(e){}});
-audio.addEventListener('ended',()=>{playing=false;icon.textContent='▶';label.textContent='Включить музыку';button.setAttribute('aria-label','Включить музыку')});
-const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}})},{threshold:.12});document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+const audio=document.getElementById('audio');
+const button=document.getElementById('musicButton');
+const icon=document.getElementById('musicIcon');
+const label=document.getElementById('musicLabel');
+let playing=false;
+button.addEventListener('click',async()=>{
+try{
+if(playing){
+audio.pause();
+playing=false;
+icon.textContent='▶';
+label.textContent='Включить музыку';
+button.setAttribute('aria-label','Включить музыку');
+}else{
+await audio.play();
+playing=true;
+icon.textContent='Ⅱ';
+label.textContent='Пауза';
+button.setAttribute('aria-label','Поставить музыку на паузу');
+}
+}catch(e){}
+});
+audio.addEventListener('ended',()=>{
+playing=false;
+icon.textContent='▶';
+label.textContent='Включить музыку';
+button.setAttribute('aria-label','Включить музыку');
+});
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add('visible');
+observer.unobserve(entry.target);
+}
+});
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 const prefersReducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if(!prefersReducedMotion){
-const confCanvas=document.getElementById('confetti'),confCtx=confCanvas.getContext('2d'),confColors=['#f2c4ce','#e8a8b8','#f5dde5','#dfc0c8','#f7e8ec','#e0b8c8','#f9d4dc','#c8a0b0'];let confParticles=[];
-function resizeConf(){confCanvas.width=window.innerWidth;confCanvas.height=window.innerHeight}
-function makeConf(){return{x:Math.random()*confCanvas.width,y:-10,r:3+Math.random()*5,color:confColors[Math.floor(Math.random()*confColors.length)],speed:.5+Math.random()*1.1,drift:(Math.random()-.5)*.8,angle:Math.random()*Math.PI*2,spin:(Math.random()-.5)*.06,opacity:.5+Math.random()*.35,shape:Math.random()>.5?'circle':'rect',w:5+Math.random()*6,h:3+Math.random()*4}}
-function drawConf(p){confCtx.save();confCtx.globalAlpha=p.opacity;confCtx.fillStyle=p.color;confCtx.translate(p.x,p.y);confCtx.rotate(p.angle);if(p.shape==='circle'){confCtx.beginPath();confCtx.arc(0,0,p.r,0,Math.PI*2);confCtx.fill()}else confCtx.fillRect(-p.w/2,-p.h/2,p.w,p.h);confCtx.restore()}
-function animateConf(){confCtx.clearRect(0,0,confCanvas.width,confCanvas.height);const max=window.innerWidth<500?50:90;if(confParticles.length<max&&Math.random()<.4)confParticles.push(makeConf());confParticles=confParticles.filter(p=>p.y<confCanvas.height+20);confParticles.forEach(p=>{p.y+=p.speed;p.x+=p.drift;p.angle+=p.spin;drawConf(p)});requestAnimationFrame(animateConf)}
-resizeConf();window.addEventListener('resize',resizeConf);animateConf()
+const confCanvas=document.getElementById('confetti');
+const confCtx=confCanvas.getContext('2d');
+const confColors=['#f2c4ce','#e8a8b8','#f5dde5','#dfc0c8','#f7e8ec','#e0b8c8','#f9d4dc','#c8a0b0'];
+let confParticles=[];
+function resizeConf(){confCanvas.width=window.innerWidth;confCanvas.height=window.innerHeight;}
+function makeConf(){return{x:Math.random()*confCanvas.width,y:-10,r:3+Math.random()*5,color:confColors[Math.floor(Math.random()*confColors.length)],speed:.5+Math.random()*1.1,drift:(Math.random()-.5)*.8,angle:Math.random()*Math.PI*2,spin:(Math.random()-.5)*.06,opacity:.5+Math.random()*.35,shape:Math.random()>.5?'circle':'rect',w:5+Math.random()*6,h:3+Math.random()*4};}
+function drawConf(p){confCtx.save();confCtx.globalAlpha=p.opacity;confCtx.fillStyle=p.color;confCtx.translate(p.x,p.y);confCtx.rotate(p.angle);if(p.shape==='circle'){confCtx.beginPath();confCtx.arc(0,0,p.r,0,Math.PI*2);confCtx.fill();}else confCtx.fillRect(-p.w/2,-p.h/2,p.w,p.h);confCtx.restore();}
+function animateConf(){confCtx.clearRect(0,0,confCanvas.width,confCanvas.height);const max=window.innerWidth<500?50:90;if(confParticles.length<max&&Math.random()<.4)confParticles.push(makeConf());confParticles=confParticles.filter(p=>p.y<confCanvas.height+20);confParticles.forEach(p=>{p.y+=p.speed;p.x+=p.drift;p.angle+=p.spin;drawConf(p);});requestAnimationFrame(animateConf);}
+resizeConf();window.addEventListener('resize',resizeConf);animateConf();
 }
 </script>
 </body>
