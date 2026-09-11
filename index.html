@@ -9,295 +9,39 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;1,500;1,600&display=swap" rel="stylesheet">
 <style>
-:root{
-  --paper:#f4efe7;
-  --paper-2:#ebe3d8;
-  --ink:#282522;
-  --muted:#6e6862;
-  --accent:#7e4653;
-  --accent-soft:#d9bec4;
-  --line:rgba(40,37,34,.16);
-  --white:#fffdf9;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0;
-  color:var(--ink);
-  background:
-    radial-gradient(circle at 14% 8%, rgba(126,70,83,.09), transparent 28%),
-    radial-gradient(circle at 90% 16%, rgba(100,91,78,.08), transparent 24%),
-    linear-gradient(180deg,var(--paper) 0%,#f8f4ed 45%,var(--paper) 100%);
-  font-family:'Manrope',sans-serif;
-  overflow-x:hidden;
-}
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  opacity:.24;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.09'/%3E%3C/svg%3E");
-  mix-blend-mode:multiply;
-  z-index:50;
-}
-main{position:relative;z-index:1}
-.wrap{width:min(1160px,calc(100% - 40px));margin:0 auto}
-.hero{
-  min-height:100svh;
-  display:grid;
-  grid-template-columns:minmax(0,1.04fr) minmax(320px,.86fr);
-  gap:clamp(28px,5vw,76px);
-  align-items:center;
-  padding:56px 0 48px;
-}
-.hero-copy{padding:24px 0}
-.eyebrow{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  color:var(--accent);
-  font-size:12px;
-  font-weight:600;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  margin-bottom:34px;
-}
-.eyebrow::before{content:"";width:38px;height:1px;background:currentColor}
-h1{
-  margin:0;
-  max-width:760px;
-  font-family:'Playfair Display',serif;
-  font-size:clamp(74px,11vw,150px);
-  line-height:.82;
-  font-weight:500;
-  letter-spacing:-.045em;
-}
-h1 em{display:block;font-weight:500;color:var(--accent);margin-left:.46em}
-.lead{
-  max-width:650px;
-  margin:36px 0 0;
-  font-family:'Playfair Display',serif;
-  font-size:clamp(25px,3vw,42px);
-  line-height:1.2;
-  font-style:italic;
-}
-.lead small{
-  display:block;
-  margin-top:20px;
-  font-family:'Manrope',sans-serif;
-  font-size:clamp(15px,1.6vw,18px);
-  line-height:1.65;
-  font-style:normal;
-  color:var(--muted);
-  max-width:540px;
-}
-.photo-card{
-  position:relative;
-  width:100%;
-  aspect-ratio:4/5;
-  max-height:76svh;
-  border-radius:34px 34px 120px 34px;
-  overflow:hidden;
-  box-shadow:0 28px 70px rgba(54,44,38,.16);
-  transform:rotate(1.4deg);
-  background:#d8cfc3;
-}
-.photo-card img{width:100%;height:100%;display:block;object-fit:cover;object-position:center}
-.photo-card::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.32);border-radius:inherit}
-.photo-note{
-  position:absolute;
-  left:-24px;
-  bottom:34px;
-  z-index:2;
-  transform:rotate(-4deg);
-  background:var(--white);
-  border:1px solid var(--line);
-  padding:12px 16px;
-  box-shadow:0 12px 28px rgba(54,44,38,.12);
-  font-family:'Playfair Display',serif;
-  font-style:italic;
-  font-size:20px;
-}
-.section{padding:clamp(70px,10vw,140px) 0}
-.section-line{border-top:1px solid var(--line)}
-.section-grid{display:grid;grid-template-columns:.72fr 1.28fr;gap:clamp(32px,6vw,86px);align-items:start}
-.kicker{position:sticky;top:28px;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
-.prose{max-width:780px;font-family:'Playfair Display',serif;font-size:clamp(30px,4.6vw,58px);line-height:1.2;letter-spacing:-.025em}
-.prose p{margin:0 0 .72em}
-.prose .quiet{font-family:'Manrope',sans-serif;font-size:clamp(17px,2vw,22px);line-height:1.65;color:var(--muted);letter-spacing:0;max-width:700px}
-.wish-panel{
-  position:relative;
-  border-radius:36px;
-  background:var(--accent);
-  color:#fff8f6;
-  padding:clamp(34px,7vw,82px);
-  overflow:hidden;
-}
-.wish-panel::after{
-  content:"";
-  position:absolute;
-  width:240px;height:240px;border:1px solid rgba(255,255,255,.18);border-radius:50%;right:-72px;top:-70px;
-}
-.wish-panel blockquote{margin:0;max-width:900px;font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,68px);line-height:1.12;font-style:italic;letter-spacing:-.03em}
-.wish-panel p{margin:34px 0 0;max-width:760px;font-size:clamp(16px,2vw,21px);line-height:1.7;color:rgba(255,248,246,.8)}
-.personal-card{
-  display:grid;
-  grid-template-columns:1.2fr .8fr;
-  gap:clamp(26px,6vw,80px);
-  align-items:end;
-  padding:clamp(30px,6vw,66px);
-  border:1px solid var(--line);
-  border-radius:34px;
-  background:rgba(255,253,249,.62);
-  backdrop-filter:blur(6px);
-}
-.personal-card h2{margin:0;font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,68px);line-height:1.05;font-weight:500;letter-spacing:-.03em}
-.personal-card p{margin:22px 0 0;font-size:clamp(17px,2vw,21px);line-height:1.7;color:var(--muted)}
-.aside-note{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(24px,3vw,38px);
-  line-height:1.28;
-  font-style:italic;
-  color:var(--accent);
-  transform:rotate(-2deg);
-}
-.final{text-align:center;padding:clamp(90px,14vw,170px) 0 70px}
-.final .mini{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600}
-.final h2{margin:18px auto 24px;max-width:950px;font-family:'Playfair Display',serif;font-size:clamp(48px,8vw,100px);line-height:.98;font-weight:500;letter-spacing:-.04em}
-.final p{margin:0 auto;color:var(--muted);font-size:clamp(16px,1.8vw,20px);line-height:1.7;max-width:660px}
-.music-fab{
-  position:fixed;
-  right:22px;
-  bottom:22px;
-  z-index:40;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  border:1px solid rgba(40,37,34,.15);
-  background:rgba(255,253,249,.88);
-  backdrop-filter:blur(14px);
-  box-shadow:0 10px 30px rgba(54,44,38,.12);
-  color:var(--ink);
-  border-radius:999px;
-  padding:10px 15px 10px 10px;
-  font:600 12px/1 'Manrope',sans-serif;
-  letter-spacing:.03em;
-  cursor:pointer;
-}
-.music-icon{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#fff}
-.music-fab:focus-visible{outline:3px solid rgba(126,70,83,.24);outline-offset:3px}
-.reveal{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s ease}
-.reveal.visible{opacity:1;transform:none}
+:root{--paper:#f4efe7;--paper-2:#ebe3d8;--ink:#282522;--muted:#6e6862;--accent:#7e4653;--accent-soft:#d9bec4;--line:rgba(40,37,34,.16);--white:#fffdf9}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:radial-gradient(circle at 14% 8%,rgba(126,70,83,.09),transparent 28%),radial-gradient(circle at 90% 16%,rgba(100,91,78,.08),transparent 24%),linear-gradient(180deg,var(--paper) 0%,#f8f4ed 45%,var(--paper) 100%);font-family:'Manrope',sans-serif;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.09'/%3E%3C/svg%3E");mix-blend-mode:multiply;z-index:0}
+#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}main{position:relative;z-index:2}.wrap{width:min(1120px,calc(100% - 36px));margin:0 auto}
+.hero{min-height:100svh;display:grid;grid-template-columns:minmax(0,1.02fr) minmax(300px,.86fr);gap:clamp(20px,4vw,52px);align-items:center;padding:38px 0 30px}.hero-copy{padding:12px 0}.eyebrow{display:flex;align-items:center;gap:12px;color:var(--accent);font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;margin-bottom:22px}.eyebrow::before{content:"";width:38px;height:1px;background:currentColor}
+h1{margin:0;max-width:760px;font-family:'Playfair Display',serif;font-size:clamp(72px,10.4vw,142px);line-height:.84;font-weight:500;letter-spacing:-.045em}h1 em{display:block;font-weight:500;color:var(--accent);margin-left:.38em}
+.lead{max-width:620px;margin:26px 0 0;font-family:'Playfair Display',serif;font-size:clamp(24px,2.7vw,38px);line-height:1.18;font-style:italic}.lead small{display:block;margin-top:14px;font-family:'Manrope',sans-serif;font-size:clamp(15px,1.45vw,17px);line-height:1.58;font-style:normal;color:var(--muted);max-width:500px}
+.photo-card{position:relative;width:100%;aspect-ratio:4/5;max-height:72svh;border-radius:34px 34px 112px 34px;overflow:hidden;box-shadow:0 22px 54px rgba(54,44,38,.14);transform:rotate(1deg);background:#d8cfc3}.photo-card img{width:100%;height:100%;display:block;object-fit:cover;object-position:center}.photo-card::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.32);border-radius:inherit}.photo-note{position:absolute;left:18px;bottom:18px;z-index:2;transform:rotate(-2.5deg);background:var(--white);border:1px solid var(--line);padding:11px 15px;box-shadow:0 12px 28px rgba(54,44,38,.12);font-family:'Playfair Display',serif;font-style:italic;font-size:19px;max-width:250px}
+.section{padding:clamp(48px,7vw,90px) 0}.section-line{border-top:1px solid var(--line)}.section-grid{display:grid;grid-template-columns:.74fr 1.26fr;gap:clamp(24px,4vw,58px);align-items:start}.kicker{position:sticky;top:20px;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}.prose{max-width:780px;font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,52px);line-height:1.16;letter-spacing:-.025em}.prose p{margin:0 0 .56em}.prose .quiet{font-family:'Manrope',sans-serif;font-size:clamp(16px,1.8vw,20px);line-height:1.6;color:var(--muted);letter-spacing:0;max-width:680px}
+.wish-panel{position:relative;border-radius:30px;background:var(--accent);color:#fff8f6;padding:clamp(28px,5vw,58px);overflow:hidden}.wish-panel::after{content:"";position:absolute;width:220px;height:220px;border:1px solid rgba(255,255,255,.16);border-radius:50%;right:-70px;top:-74px}.wish-panel blockquote{margin:0;max-width:900px;font-family:'Playfair Display',serif;font-size:clamp(30px,4.7vw,60px);line-height:1.08;font-style:italic;letter-spacing:-.03em}.wish-panel p{margin:22px 0 0;max-width:740px;font-size:clamp(16px,1.8vw,20px);line-height:1.62;color:rgba(255,248,246,.82)}
+.personal-card{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(22px,4vw,44px);align-items:end;padding:clamp(24px,4vw,42px);border:1px solid var(--line);border-radius:30px;background:rgba(255,253,249,.68);backdrop-filter:blur(6px)}.personal-card h2{margin:0;font-family:'Playfair Display',serif;font-size:clamp(34px,4.2vw,56px);line-height:1.04;font-weight:500;letter-spacing:-.03em}.personal-card p{margin:16px 0 0;font-size:clamp(16px,1.8vw,20px);line-height:1.6;color:var(--muted)}.aside-note{font-family:'Playfair Display',serif;font-size:clamp(22px,2.6vw,34px);line-height:1.22;font-style:italic;color:var(--accent);transform:rotate(-1.5deg)}
+.final{text-align:center;padding:clamp(56px,8vw,96px) 0 40px}.final .mini{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600}.final h2{margin:14px auto 18px;max-width:900px;font-family:'Playfair Display',serif;font-size:clamp(42px,6vw,84px);line-height:.96;font-weight:500;letter-spacing:-.04em}.final p{margin:0 auto;color:var(--muted);font-size:clamp(15px,1.6vw,19px);line-height:1.64;max-width:620px}
+.music-fab{position:fixed;right:18px;bottom:18px;z-index:5;display:flex;align-items:center;gap:10px;border:1px solid rgba(40,37,34,.15);background:rgba(255,253,249,.88);backdrop-filter:blur(14px);box-shadow:0 10px 30px rgba(54,44,38,.12);color:var(--ink);border-radius:999px;padding:9px 14px 9px 9px;font:600 12px/1 'Manrope',sans-serif;letter-spacing:.03em;cursor:pointer}.music-icon{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#fff}.music-fab:focus-visible{outline:3px solid rgba(126,70,83,.24);outline-offset:3px}.reveal{opacity:0;transform:translateY(18px);transition:opacity .75s ease,transform .75s ease}.reveal.visible{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}.photo-card{transform:none}}
-@media (max-width:820px){
-  .wrap{width:min(100% - 28px,680px)}
-  .hero{grid-template-columns:1fr;min-height:auto;padding:30px 0 70px;gap:24px}
-  .hero-copy{padding:22px 0 0}
-  .eyebrow{margin-bottom:24px}
-  h1{font-size:clamp(76px,24vw,132px)}
-  h1 em{margin-left:.2em}
-  .lead{margin-top:28px}
-  .photo-card{max-height:none;aspect-ratio:4/5;border-radius:28px 28px 86px 28px;transform:rotate(.7deg)}
-  .photo-note{left:16px;bottom:20px;font-size:17px}
-  .section-grid{grid-template-columns:1fr;gap:24px}.kicker{position:static}
-  .personal-card{grid-template-columns:1fr;align-items:start}
-  .aside-note{margin-top:10px}
-}
-@media (max-width:520px){
-  .wrap{width:calc(100% - 24px)}
-  .hero{padding-top:18px}
-  .lead small{font-size:15px}
-  .section{padding:68px 0}
-  .wish-panel{border-radius:28px;padding:30px 24px}
-  .personal-card{border-radius:28px;padding:28px 24px}
-  .music-fab{right:12px;bottom:12px}.music-fab span.label{display:none}.music-fab{padding:8px}
-}
+@media (max-width:920px){.wrap{width:min(100% - 28px,720px)}.hero{grid-template-columns:1fr;min-height:auto;padding:22px 0 42px;gap:16px}.hero-copy{padding:8px 0 0}.eyebrow{margin-bottom:18px}h1{font-size:clamp(64px,20vw,110px)}h1 em{margin-left:.16em}.lead{margin-top:20px;max-width:100%}.lead small{max-width:100%}.photo-card{max-height:none;aspect-ratio:4/4.9;border-radius:26px 26px 78px 26px;transform:rotate(.5deg)}.photo-note{left:14px;bottom:14px;font-size:16px;max-width:220px;padding:10px 12px}.section{padding:44px 0}.section-grid{grid-template-columns:1fr;gap:18px}.kicker{position:static}.wish-panel{padding:26px 24px}.personal-card{grid-template-columns:1fr;align-items:start}.aside-note{margin-top:2px}.final{padding:48px 0 30px}}
+@media (max-width:520px){.wrap{width:calc(100% - 24px)}.hero{padding-top:16px;padding-bottom:34px}.eyebrow{font-size:11px;letter-spacing:.16em}h1{font-size:clamp(58px,19vw,84px)}.lead{font-size:clamp(23px,8vw,30px)}.lead small{font-size:14px;line-height:1.54}.photo-card{aspect-ratio:4/5.1}.photo-note{font-size:15px;max-width:195px}.section{padding:36px 0}.prose{font-size:clamp(26px,8.7vw,36px)}.prose .quiet,.wish-panel p,.personal-card p,.final p{font-size:15px}.wish-panel{border-radius:24px;padding:22px 18px}.personal-card{border-radius:24px;padding:22px 18px;gap:18px}.personal-card h2{font-size:clamp(31px,9vw,42px)}.aside-note{font-size:clamp(21px,7vw,28px)}.final h2{font-size:clamp(36px,11vw,52px)}.music-fab{right:12px;bottom:12px;padding:8px}.music-fab span.label{display:none}}
 </style>
 </head>
 <body>
+<canvas id="confetti" aria-hidden="true"></canvas>
 <main>
-  <div class="wrap">
-    <section class="hero">
-      <div class="hero-copy reveal">
-        <div class="eyebrow">С днём рождения</div>
-        <h1>Катя,<em>для Вас.</em></h1>
-        <div class="lead">
-          Пусть этот год будет хорошим.<br>Не идеальным — это было бы подозрительно.
-          <small>А просто спокойным, интересным, добрым — и с заметно большим количеством приятных вещей, чем поводов о них беспокоиться.</small>
-        </div>
-      </div>
-      <div class="photo-card reveal" aria-label="Фотография Кати">
-        <img src="image.jpg" alt="Катя">
-        <div class="photo-note">Сегодня можно ничего не решать.</div>
-      </div>
-    </section>
-  </div>
-
-  <section class="section section-line">
-    <div class="wrap section-grid">
-      <div class="kicker reveal">Пожелание на год</div>
-      <div class="prose reveal">
-        <p>Пусть рядом будут люди, с которыми легко.</p>
-        <p>Пусть работа радует не только результатом, но и самим процессом.</p>
-        <p class="quiet">Пусть будут хорошие новости, приятные поездки, встречи, разговоры и вечера, которые не хочется торопить. И пусть всё важное складывается чуть проще, чем обычно.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap">
-      <div class="wish-panel reveal">
-        <blockquote>И пусть многое в этом году оказывается легче, чем Вы заранее представляли.</blockquote>
-        <p>Без обязательной борьбы за каждый хороший день. Без необходимости всё удерживать на себе. Иногда пусть обстоятельства сами ведут себя прилично.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section-line">
-    <div class="wrap">
-      <div class="personal-card reveal">
-        <div>
-          <h2>И ещё одно — совсем личное.</h2>
-          <p>Пусть сын радует, взрослеет и постепенно осваивает один особенно ценный навык — самостоятельное написание курсовых.</p>
-          <p>Я, со своей стороны, продолжаю регулярно напоминать ему, что именно так всё и должно происходить.</p>
-        </div>
-        <div class="aside-note">Насколько успешно — покажет следующий учебный год.</div>
-      </div>
-    </div>
-  </section>
-
-  <section class="final">
-    <div class="wrap reveal">
-      <div class="mini">С днём рождения, Катя</div>
-      <h2>Пусть впереди будет много хорошего.</h2>
-      <p>И пусть хорошее не требует долгих доказательств, сложных объяснений и предварительного согласования со всеми возможными обстоятельствами.</p>
-    </div>
-  </section>
+<div class="wrap"><section class="hero"><div class="hero-copy reveal"><div class="eyebrow">С днём рождения</div><h1>Катя,<em>для Вас.</em></h1><div class="lead">Пусть этот год будет хорошим.<br>Не идеальным — это было бы подозрительно.<small>А просто спокойным, интересным, добрым — и с заметно большим количеством приятных вещей, чем поводов о них беспокоиться.</small></div></div><div class="photo-card reveal" aria-label="Фотография Кати"><img src="image.jpg" alt="Катя"><div class="photo-note">Сегодня можно ничего не решать.</div></div></section></div>
+<section class="section section-line"><div class="wrap section-grid"><div class="kicker reveal">Пожелание на год</div><div class="prose reveal"><p>Пусть рядом будут люди, с которыми легко.</p><p>Пусть работа радует не только результатом, но и самим процессом.</p><p class="quiet">Пусть будут хорошие новости, приятные поездки, встречи, разговоры и вечера, которые не хочется торопить. И пусть всё важное складывается чуть проще, чем обычно.</p></div></div></section>
+<section class="section"><div class="wrap"><div class="wish-panel reveal"><blockquote>И пусть многое в этом году оказывается легче, чем Вы заранее представляли.</blockquote><p>Без обязательной борьбы за каждый хороший день. Без необходимости всё удерживать на себе. Иногда пусть обстоятельства сами ведут себя прилично.</p></div></div></section>
+<section class="section section-line"><div class="wrap"><div class="personal-card reveal"><div><h2>И ещё одно — совсем личное.</h2><p>Пусть сын радует, взрослеет и постепенно осваивает один особенно ценный навык — самостоятельное написание курсовых.</p><p>Я, со своей стороны, продолжаю регулярно напоминать ему, что именно так всё и должно происходить.</p></div><div class="aside-note">Насколько успешно — покажет следующий учебный год.</div></div></div></section>
+<section class="final"><div class="wrap reveal"><div class="mini">С днём рождения, Катя</div><h2>Пусть впереди будет много хорошего.</h2><p>И пусть хорошее не требует долгих доказательств, сложных объяснений и предварительного согласования со всеми возможными обстоятельствами.</p></div></section>
 </main>
-
-<button class="music-fab" id="musicButton" type="button" aria-label="Включить музыку">
-  <span class="music-icon" id="musicIcon">▶</span>
-  <span class="label" id="musicLabel">Включить музыку</span>
-</button>
+<button class="music-fab" id="musicButton" type="button" aria-label="Включить музыку"><span class="music-icon" id="musicIcon">▶</span><span class="label" id="musicLabel">Включить музыку</span></button>
 <audio id="audio" src="music.mp3" preload="metadata"></audio>
 <script>
-const audio=document.getElementById('audio');
-const button=document.getElementById('musicButton');
-const icon=document.getElementById('musicIcon');
-const label=document.getElementById('musicLabel');
-let playing=false;
-button.addEventListener('click',async()=>{
-  try{
-    if(playing){audio.pause();playing=false;icon.textContent='▶';label.textContent='Включить музыку';button.setAttribute('aria-label','Включить музыку');}
-    else{await audio.play();playing=true;icon.textContent='Ⅱ';label.textContent='Пауза';button.setAttribute('aria-label','Поставить музыку на паузу');}
-  }catch(e){}
-});
-audio.addEventListener('ended',()=>{playing=false;icon.textContent='▶';label.textContent='Включить музыку';button.setAttribute('aria-label','Включить музыку');});
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target);}});
-},{threshold:.12});
-document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+const audio=document.getElementById('audio'),button=document.getElementById('musicButton'),icon=document.getElementById('musicIcon'),label=document.getElementById('musicLabel');let playing=false;button.addEventListener('click',async()=>{try{if(playing){audio.pause();playing=false;icon.textContent='▶';label.textContent='Включить музыку';button.setAttribute('aria-label','Включить музыку')}else{await audio.play();playing=true;icon.textContent='Ⅱ';label.textContent='Пауза';button.setAttribute('aria-label','Поставить музыку на паузу')}}catch(e){}});audio.addEventListener('ended',()=>{playing=false;icon.textContent='▶';label.textContent='Включить музыку';button.setAttribute('aria-label','Включить музыку')});
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}})},{threshold:.12});document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+const prefersReducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;if(!prefersReducedMotion){const canvas=document.getElementById('confetti'),ctx=canvas.getContext('2d'),colors=['#f2c4ce','#e8a8b8','#f5dde5','#dfc0c8','#f7e8ec','#e0b8c8','#f9d4dc','#c8a0b0'];let particles=[];function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}function createParticle(){return{x:Math.random()*canvas.width,y:-20,r:2+Math.random()*4,color:colors[Math.floor(Math.random()*colors.length)],speed:.45+Math.random()*.9,drift:(Math.random()-.5)*.75,angle:Math.random()*Math.PI*2,spin:(Math.random()-.5)*.05,opacity:.38+Math.random()*.28,shape:Math.random()>.58?'circle':'rect',w:4+Math.random()*5,h:3+Math.random()*4}}function drawParticle(p){ctx.save();ctx.globalAlpha=p.opacity;ctx.fillStyle=p.color;ctx.translate(p.x,p.y);ctx.rotate(p.angle);if(p.shape==='circle'){ctx.beginPath();ctx.arc(0,0,p.r,0,Math.PI*2);ctx.fill()}else ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore()}function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);const maxParticles=window.innerWidth<520?34:window.innerWidth<920?54:74;if(particles.length<maxParticles&&Math.random()<.28)particles.push(createParticle());particles=particles.filter(p=>p.y<canvas.height+24);particles.forEach(p=>{p.y+=p.speed;p.x+=p.drift;p.angle+=p.spin;drawParticle(p)});requestAnimationFrame(animate)}resizeCanvas();window.addEventListener('resize',resizeCanvas);animate()}
 </script>
 </body>
 </html>
